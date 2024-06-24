@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语学习助手</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>英语学习助手</h1>
+        <div class="tab-container">
+            <div class="tab active" data-tab="word-management">单词管理</div>
+            <div class="tab" data-tab="sentence-management">例句管理</div>
+            <div class="tab" data-tab="search-translate">搜索与翻译</div>
+            <div class="tab" data-tab="test-generator">生成测试</div>
+            <div class="tab" data-tab="backup-restore">备份与恢复</div>
+        </div>
+        <div id="word-management" class="tab-content active">
+            <h2>单词管理</h2>
+            <form id="word-form">
+                <div class="form-group">
+                    <label for="word">单词:</label>
+                    <input type="text" id="word" name="word" required>
+                </div>
+                <div class="form-group">
+                    <label for="translation">翻译:</label>
+                    <input type="text" id="translation" name="translation" required>
+                </div>
+                <div class="form-group">
+                    <label for="difficulty">难度:</label>
+                    <select id="difficulty" name="difficulty" required>
+                        <option value="1">1（简单）</option>
+                        <option value="2">2（中等）</option>
+                        <option value="3">3（困难）</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="submit">添加单词</button>
+                </div>
+            </form>
+            <form id="update-word-form">
+                <div class="form-group">
+                    <label for="update-id">单词ID:</label>
+                    <input type="number" id="update-id" name="id" required>
+                </div>
+                <div class="form-group">
+                    <label for="update-word">单词:</label>
+                    <input type="text" id="update-word" name="word" required>
+                </div>
+                <div class="form-group">
+                    <label for="update-translation">翻译:</label>
+                    <input type="text" id="update-translation" name="translation" required>
+                </div>
+                <div class="form-group">
+                    <label for="update-difficulty">难度:</label>
+                    <select id="update-difficulty" name="difficulty" required>
+                        <option value="1">1（简单）</option>
+                        <option value="2">2（中等）</option>
+                        <option value="3">3（困难）</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="submit">修改单词</button>
+                </div>
+            </form>
+            <form id="delete-word-form">
+                <div class="form-group">
+                    <label for="delete-id">单词ID:</label>
+                    <input type="number" id="delete-id" name="id" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit">删除单词</button>
+                </div>
+            </form>
+            <div class="result" id="word-result"></div>
+        </div>
+        <div id="sentence-management" class="tab-content">
+            <h2>例句管理</h2>
+            <form id="sentence-form">
+                <div class="form-group">
+                    <label for="word-id">单词ID:</label>
+                    <input type="number" id="word-id" name="word_id" required>
+                </div>
+                <div class="form-group">
+                    <label for="sentence">例句:</label>
+                    <textarea id="sentence" name="sentence" required></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit">添加例句</button>
+                </div>
+            </form>
+            <form id="update-sentence-form">
+                <div class="form-group">
+                    <label for="update-sentence-id">例句ID:</label>
+                    <input type="number" id="update-sentence-id" name="id" required>
+                </div>
+                <div class="form-group">
+                    <label for="update-sentence">例句:</label>
+                    <textarea id="update-sentence" name="sentence" required></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit">修改例句</button>
+                </div>
+            </form>
+            <form id="delete-sentence-form">
+                <div class="form-group">
+                    <label for="delete-sentence-id">例句ID:</label>
+                    <input type="number" id="delete-sentence-id" name="id" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit">删除例句</button>
+                </div>
+            </form>
+            <div class="result" id="sentence-result"></div>
+        </div>
+        <div id="search-translate" class="tab-content">
+            <h2>搜索与翻译</h2>
+            <form id="search-form">
+                <div class="form-group">
+                    <label for="search-word">搜索单词:</label>
+                    <input type="text" id="search-word" name="search_word" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit">搜索</button>
+                </div>
+            </form>
+            <div class="result" id="search-result"></div>
+            <form id="translate-form">
+                <div class="form-group">
+                    <label for="translate-text">翻译文本:</label>
+                    <textarea id="translate-text" name="translate_text" required></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit">翻译</button>
+                </div>
+            </form>
+            <div class="result" id="translate-result"></div>
+        </div>
+        <div id="test-generator" class="tab-content">
+            <h2>生成测试</h2>
+            <form id="test-form">
+                <div class="form-group">
+                    <label for="test-difficulty">难度:</label>
+                    <select id="test-difficulty" name="difficulty" required>
+                        <option value="1">1（简单）</option>
+                        <option value="2">2（中等）</option>
+                        <option value="3">3（困难）</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="submit">生成测试</button>
+                </div>
+            </form>
+            <div class="result" id="test-result"></div>
+        </div>
+        <div id="backup-restore" class="tab-content">
+            <h2>备份与恢复</h2>
+            <div class="backup-restore">
+                <button id="backup-button">备份数据</button>
+            </div>
+            <form id="restore-form" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="restore-file">恢复文件:</label>
+                    <input type="file" id="restore-file" name="restore_file" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit">恢复数据</button>
+                </div>
+            </form>
+            <div class="result" id="backup-restore-result"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
