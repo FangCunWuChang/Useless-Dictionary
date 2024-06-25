@@ -46,13 +46,17 @@ h1, h2 {
     display: block;
 }
 
+form {
+    margin: 20px 0;
+}
+
 .form-group {
     margin-bottom: 15px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 5px;
+    margin: 5px 0;
 }
 
 .form-group input,
@@ -62,6 +66,20 @@ h1, h2 {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
+}
+
+.form-group input,
+.form-group textarea {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #3f51b5;
 }
 
 .form-group button {
@@ -78,10 +96,34 @@ h1, h2 {
 }
 
 .result {
-    margin-top: 20px;
-    padding: 10px;
-    background: #f0f0f0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    background: rgba(255, 255, 255, 0);
+    border: none;
     white-space: pre-wrap;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+th {
+    background-color: #a6c1ee;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background: #5c6bc080;
 }
