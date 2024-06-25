@@ -87,7 +87,18 @@ class EnglishHelper {
     }
 
     private function mockTranslate($text) {
-        return "Translated: " . $text;
+        $words = explode(' ', $text);
+        $translatedWords = array_map(function($word) {
+            return $this->getWordTranslation($word);
+        }, $words);
+        return implode(' ', $translatedWords);
+    }
+
+    private function getWordTranslation($word) {
+        $stmt = $this->pdo->prepare("SELECT translation FROM words WHERE word = :word LIMIT 1");
+        $stmt->execute([':word' => $word]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? $result['translation'] : $word;
     }
 
     public function backup($backupFile) {
