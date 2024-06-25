@@ -6,21 +6,24 @@ class EnglishHelper {
         $this->pdo = new PDO('sqlite:' . $dbFile);
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $stmt = $this->pdo->prepare(
+        $this->pdo->exec(
             "CREATE TABLE IF NOT EXISTS `words` (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             word TEXT NOT NULL,
             translation TEXT,
             difficulty INTEGER)");
-        $stmt->execute();
 
-        $stmt = $this->pdo->prepare(
+        $this->pdo->exec(
             "CREATE TABLE IF NOT EXISTS `sentences` (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             word_id INTEGER,
             sentence TEXT,
             FOREIGN KEY(word_id) REFERENCES words(id))");
-        $stmt->execute();
+
+        $this->pdo->exec(
+            "CREATE VIEW IF NOT EXISTS `get_word_view` AS
+            SELECT words.id, words.word, words.translation, words.difficulty, sentences.id AS sid, sentences.sentence 
+            FROM words LEFT JOIN sentences ON words.id = sentences.word_id");
     }
 
     public function addWord($word, $translation, $difficulty) {
@@ -54,13 +57,13 @@ class EnglishHelper {
     }
 
     public function getWord($id) {
-        $stmt = $this->pdo->prepare("SELECT * FROM words WHERE id = :id");
+        $stmt = $this->pdo->prepare("SELECT * FROM get_word_view WHERE id = :id");
         $stmt->execute([':id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function searchWord($word) {
-        $stmt = $this->pdo->prepare("SELECT * FROM words WHERE word LIKE :word");
+        $stmt = $this->pdo->prepare("SELECT * FROM get_word_view WHERE word LIKE :word");
         $stmt->execute([':word' => '%' . $word . '%']);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
