@@ -22,12 +22,20 @@ document.addEventListener('DOMContentLoaded', function () {
         }).then(response => response.json());
     }
 
+    function showAlert(title, text, success) {
+        Swal.fire(title, text, success ? 'success' : 'error');
+    }
+
+    function showResultAlert(title, success) {
+        showAlert(title, title + (success ? '成功' : '失败') + '！', success);
+    }
+
     document.getElementById('word-form').addEventListener('submit', function (e) {
         e.preventDefault();
         const formData = new FormData(this);
         formData.append('action', 'addWord');
         sendRequest('backend.php', formData)
-            .then(data => document.getElementById('word-result').innerText = JSON.stringify(data, null, 2));
+            .then(data => showResultAlert('添加单词', data));
     });
 
     document.getElementById('update-word-form').addEventListener('submit', function (e) {
@@ -35,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const formData = new FormData(this);
         formData.append('action', 'updateWord');
         sendRequest('backend.php', formData)
-            .then(data => document.getElementById('word-result').innerText = JSON.stringify(data, null, 2));
+            .then(data => showResultAlert('修改单词', data));
     });
 
     document.getElementById('delete-word-form').addEventListener('submit', function (e) {
@@ -43,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const formData = new FormData(this);
         formData.append('action', 'deleteWord');
         sendRequest('backend.php', formData)
-            .then(data => document.getElementById('word-result').innerText = JSON.stringify(data, null, 2));
+            .then(data => showResultAlert('删除单词', data));
     });
 
     document.getElementById('sentence-form').addEventListener('submit', function (e) {
@@ -51,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const formData = new FormData(this);
         formData.append('action', 'addSentence');
         sendRequest('backend.php', formData)
-            .then(data => document.getElementById('sentence-result').innerText = JSON.stringify(data, null, 2));
+            .then(data => showResultAlert('添加例句', data));
     });
 
     document.getElementById('update-sentence-form').addEventListener('submit', function (e) {
@@ -59,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const formData = new FormData(this);
         formData.append('action', 'updateSentence');
         sendRequest('backend.php', formData)
-            .then(data => document.getElementById('sentence-result').innerText = JSON.stringify(data, null, 2));
+            .then(data => showResultAlert('修改例句', data));
     });
 
     document.getElementById('delete-sentence-form').addEventListener('submit', function (e) {
@@ -67,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const formData = new FormData(this);
         formData.append('action', 'deleteSentence');
         sendRequest('backend.php', formData)
-            .then(data => document.getElementById('sentence-result').innerText = JSON.stringify(data, null, 2));
+            .then(data => showResultAlert('删除例句', data));
     });
 
     document.getElementById('search-form').addEventListener('submit', function (e) {
@@ -102,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             body: new URLSearchParams('action=backupData')
         }).then(response => response.text())
-          .then(data => document.getElementById('backup-restore-result').innerText = data);
+          .then(data => showResultAlert('备份', data));
     });
 
     document.getElementById('restore-form').addEventListener('submit', function (e) {
@@ -113,6 +121,6 @@ document.addEventListener('DOMContentLoaded', function () {
             method: 'POST',
             body: formData
         }).then(response => response.text())
-          .then(data => document.getElementById('backup-restore-result').innerText = data);
+          .then(data => showResultAlert('还原', data));
     });
 });

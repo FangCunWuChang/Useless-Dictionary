@@ -12,9 +12,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $translation = $_POST['translation'];
             $difficulty = $_POST['difficulty'];
             if ($englishHelper->addWord($word, $translation, $difficulty)) {
-                echo "单词添加成功";
+                echo json_encode(true);
             } else {
-                echo "单词添加失败";
+                echo json_encode(false);
             }
             break;
         case 'modifyWord':
@@ -23,43 +23,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $translation = $_POST['translation'];
             $difficulty = $_POST['difficulty'];
             if ($englishHelper->updateWord($word_id, $word, $translation, $difficulty)) {
-                echo "单词修改成功";
+                echo json_encode(true);
             } else {
-                echo "单词修改失败";
+                echo json_encode(false);
             }
             break;
         case 'deleteWord':
             $word_id = $_POST['id'];
             if ($englishHelper->deleteWord($word_id)) {
-                echo "单词删除成功";
+                echo json_encode(true);
             } else {
-                echo "单词删除失败";
+                echo json_encode(false);
             }
             break;
         case 'addSentence':
             $word_id = $_POST['word_id'];
             $sentence = $_POST['sentence'];
             if ($englishHelper->addSentence($word_id, $sentence)) {
-                echo "例句添加成功";
+                echo json_encode(true);
             } else {
-                echo "例句添加失败";
+                echo json_encode(false);
             }
             break;
         case 'modifySentence':
             $sentence_id = $_POST['id'];
             $sentence = $_POST['sentence'];
             if ($englishHelper->updateSentence($sentence_id, $sentence)) {
-                echo "例句修改成功";
+                echo json_encode(true);
             } else {
-                echo "例句修改失败";
+                echo json_encode(false);
             }
             break;
         case 'deleteSentence':
             $sentence_id = $_POST['id'];
             if ($englishHelper->deleteSentence($sentence_id)) {
-                echo "例句删除成功";
+                echo json_encode(true);
             } else {
-                echo "例句删除失败";
+                echo json_encode(false);
             }
             break;
         case 'generateTest':
@@ -70,21 +70,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         case 'backupData':
             $backup_file = 'backup_' . date('Y-m-d_H-i-s') . '.db';
             if ($englishHelper->backup($backup_file)) {
-                echo "数据备份成功";
+                echo json_encode(true);
             } else {
-                echo "数据备份失败";
+                echo json_encode(false);
             }
             break;
         case 'restoreData':
             if ($_FILES['restore_file']['error'] == UPLOAD_ERR_OK && is_uploaded_file($_FILES['restore_file']['tmp_name'])) {
                 $restore_file = $_FILES['restore_file']['tmp_name'];
                 if ($englishHelper->restore($restore_file)) {
-                    echo "数据恢复成功";
+                    echo json_encode(true);
                 } else {
-                    echo "数据恢复失败";
+                    echo json_encode(false);
                 }
             } else {
-                echo "数据恢复失败";
+                echo json_encode(false);
             }
             break;
     }
