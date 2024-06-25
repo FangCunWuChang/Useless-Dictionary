@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             break;
         case 'backupData':
             $backup_file = 'backup_' . date('Y-m-d_H-i-s') . '.db';
-            if ($englishHelper->backup($backup_file)) {
+            if (copy('english_helper.db', $backup_file)) {
                 echo json_encode(true);
             } else {
                 echo json_encode(false);
@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         case 'restoreData':
             if ($_FILES['restore_file']['error'] == UPLOAD_ERR_OK && is_uploaded_file($_FILES['restore_file']['tmp_name'])) {
                 $restore_file = $_FILES['restore_file']['tmp_name'];
-                if ($englishHelper->restore($restore_file)) {
+                if (copy($restore_file, 'english_helper.db')) {
                     echo json_encode(true);
                 } else {
                     echo json_encode(false);

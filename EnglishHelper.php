@@ -100,13 +100,5 @@ class EnglishHelper {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result ? $result['translation'] : $word;
     }
-
-    public function backup($backupFile) {
-        return copy('english_helper.db', $backupFile);
-    }
-
-    public function restore($backupFile) {
-        return copy($backupFile, 'english_helper.db');
-    }
 }
 ?>

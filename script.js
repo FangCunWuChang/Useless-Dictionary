@@ -22,6 +22,16 @@ document.addEventListener('DOMContentLoaded', function () {
         }).then(response => response.json());
     }
 
+    function sendFileRequest(url, formData) {
+        return fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+            body: formData
+        }).then(response => response.json());
+    }
+
     function showAlert(title, text, success) {
         Swal.fire(title, text, success ? 'success' : 'error');
     }
@@ -168,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
         const formData = new FormData(this);
         formData.append('action', 'restoreData');
-        sendRequest('backend.php', formData)
+        sendFileRequest('backend.php', formData)
           .then(data => showResultAlert('还原', data));
     });
 });
