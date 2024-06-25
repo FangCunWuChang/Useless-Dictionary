@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
             break;
         case 'modifyWord':
-            $word_id = $_POST['word_id'];
+            $word_id = $_POST['id'];
             $word = $_POST['word'];
             $translation = $_POST['translation'];
             $difficulty = $_POST['difficulty'];
@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
             break;
         case 'deleteWord':
-            $word_id = $_POST['delete_word_id'];
+            $word_id = $_POST['id'];
             if ($englishHelper->deleteWord($word_id)) {
                 echo "单词删除成功";
             } else {
@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
             break;
         case 'modifySentence':
-            $sentence_id = $_POST['sentence_id'];
+            $sentence_id = $_POST['id'];
             $sentence = $_POST['sentence'];
             if ($englishHelper->updateSentence($sentence_id, $sentence)) {
                 echo "例句修改成功";
@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
             break;
         case 'deleteSentence':
-            $sentence_id = $_POST['delete_sentence_id'];
+            $sentence_id = $_POST['id'];
             if ($englishHelper->deleteSentence($sentence_id)) {
                 echo "例句删除成功";
             } else {
@@ -99,8 +99,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             $words = $englishHelper->searchWord($search_word);
             echo json_encode($words);
             break;
-        case 'searchText':
-            $search_text = $_GET['search_text'];
+        case 'getTranslation':
+            $search_text = $_GET['text'];
             $translations = $englishHelper->getTranslation($search_text);
             echo json_encode($translations);
             break;
