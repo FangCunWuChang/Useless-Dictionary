@@ -25,9 +25,6 @@ document.addEventListener('DOMContentLoaded', function () {
     function sendFileRequest(url, formData) {
         return fetch(url, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            },
             body: formData
         }).then(response => response.json());
     }

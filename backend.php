@@ -76,10 +76,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
             break;
         case 'restoreData':
-            if ($_FILES['restore_file']['error'] == UPLOAD_ERR_OK && is_uploaded_file($_FILES['restore_file']['tmp_name'])) {
-                $restore_file = $_FILES['restore_file']['tmp_name'];
-                if (copy($restore_file, 'english_helper.db')) {
-                    echo json_encode(true);
+            if ($_FILES['restore_file']['error'] == UPLOAD_ERR_OK) {
+                if (is_uploaded_file($_FILES['restore_file']['tmp_name'])) {
+                    $restore_file = $_FILES['restore_file']['tmp_name'];
+                    if (copy($restore_file, 'english_helper.db')) {
+                        echo json_encode(true);
+                    } else {
+                        echo json_encode(false);
+                    }
                 } else {
                     echo json_encode(false);
                 }
