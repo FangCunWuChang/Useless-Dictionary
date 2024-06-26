@@ -9,7 +9,7 @@ class EnglishHelper {
         $this->pdo->exec(
             "CREATE TABLE IF NOT EXISTS `words` (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            word TEXT NOT NULL,
+            word TEXT NOT NULL UNIQUE,
             translation TEXT,
             difficulty INTEGER)");
 
@@ -18,7 +18,8 @@ class EnglishHelper {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             word_id INTEGER,
             sentence TEXT,
-            FOREIGN KEY(word_id) REFERENCES words(id))");
+            FOREIGN KEY(word_id) REFERENCES words(id),
+            UNIQUE(word_id, sentence))");
 
         $this->pdo->exec(
             "CREATE VIEW IF NOT EXISTS `get_word_view` AS
