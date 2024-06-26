@@ -33,8 +33,9 @@ document.addEventListener('DOMContentLoaded', function () {
         Swal.fire(title, text, success ? 'success' : 'error');
     }
 
-    function showResultAlert(title, success) {
-        showAlert(title, title + (success ? '成功' : '失败') + '！', success);
+    function showResultAlert(title, data) {
+        const success = data.status;
+        showAlert(title, title + (success ? '成功' : '失败') + '！\n' + data.message, success);
     }
 
     function displaySearchResults(data) {
@@ -91,6 +92,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function dataWrapper(title, data, callback) {
+        if (data.status) {
+            callback(data.data);
+        } else {
+            showResultAlert(title, data);
+        }
+    }
+
     document.getElementById('word-form').addEventListener('submit', function (e) {
         e.preventDefault();
         const formData = new FormData(this);
@@ -140,27 +149,36 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.getElementById('search-form').addEventListener('submit', function (e) {
+        const resultsDiv = document.getElementById('search-result');
+        resultsDiv.innerHTML = '';
         e.preventDefault();
+
         const formData = new FormData(this);
         fetch('backend.php?action=searchWord&search_word=' + formData.get('search_word'))
             .then(response => response.json())
-            .then(data => displaySearchResults(data));
+            .then(data => dataWrapper('搜索单词', data, displaySearchResults));
     });
 
     document.getElementById('translate-form').addEventListener('submit', function (e) {
+        const resultsDiv = document.getElementById('translate-result');
+        resultsDiv.innerText = '';
         e.preventDefault();
+        
         const formData = new FormData(this);
         fetch('backend.php?action=getTranslation&text=' + formData.get('translate_text'))
             .then(response => response.json())
-            .then(data => document.getElementById('translate-result').innerText = data);
+            .then(data => dataWrapper('翻译文本', data, text => document.getElementById('translate-result').innerText = text));
     });
 
     document.getElementById('test-form').addEventListener('submit', function (e) {
+        const resultsDiv = document.getElementById('test-result');
+        resultsDiv.innerHTML = '';
         e.preventDefault();
+
         const formData = new FormData(this);
         formData.append('action', 'generateTest');
         sendRequest('backend.php', formData)
-            .then(data => displayTestResults(data));
+            .then(data => dataWrapper('生成测试', data, displayTestResults));
     });
 
     document.getElementById('backup-form').addEventListener('submit', function (e) {
